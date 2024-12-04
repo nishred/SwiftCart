@@ -14,6 +14,7 @@ export function useProducts() {
       try {
         setIsLoading(true)
         const data = await fetchProducts();
+        console.log("use Products",data)    
         setProducts(data.data.products);
       } catch (err) {
         setError(err.message);

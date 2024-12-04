@@ -5,8 +5,7 @@ import { useProducts } from "../hooks/useProducts";
 const HomeScreen = () => {
   const { products, isLoading, error } = useProducts();
 
-
-  console.log(products)
+  console.log("home-screen",products)
 
   if (isLoading) return <div>Loading...</div>;
 
