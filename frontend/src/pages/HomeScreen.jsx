@@ -1,13 +1,13 @@
 import Product from "../components/Product";
+import Spinner from "../components/Spinner";
 
 import { useProducts } from "../hooks/useProducts";
 
 const HomeScreen = () => {
   const { products, isLoading, error } = useProducts();
 
-  console.log("home-screen",products)
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Spinner parent={"main"}/>;
 
   if (error) return <div>{error}</div>;
 

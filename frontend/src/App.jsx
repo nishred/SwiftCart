@@ -8,8 +8,18 @@ import AppLayout from "./pages/AppLayout";
 import ProductPage from "./pages/ProductPage";
 import Cart from "./pages/Cart";
 import SignIn from "./pages/SignIn";
+
+import {QueryClient,QueryClientProvider} from "@tanstack/react-query";
+
+import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
+
+const queryClient = new QueryClient();
+
 const App = () => {
   return (
+
+    <QueryClientProvider client={queryClient}>
+    <ReactQueryDevtools initialIsOpen={true} />
     <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />}>
@@ -20,6 +30,7 @@ const App = () => {
         </Route>
       </Routes>
     </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 

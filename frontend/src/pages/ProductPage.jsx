@@ -7,6 +7,7 @@ import Rating from "../components/Rating";
 import { ThickDividerHorizontalIcon } from "@radix-ui/themes/dist/cjs/index.js";
 
 import { useProduct } from "../hooks/useProduct";
+import Spinner from "../components/Spinner";
 
 //  {
 //     _id: '1',
@@ -54,7 +55,7 @@ const ProductPage = () => {
 
   const { product, isLoading, error } = useProduct(id);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Spinner />;
 
   if (error) return <div>{error.message}</div>;
 
