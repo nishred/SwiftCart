@@ -7,7 +7,19 @@ import Rating from "../components/Rating";
 import { ThickDividerHorizontalIcon } from "@radix-ui/themes/dist/cjs/index.js";
 
 import { useProduct } from "../hooks/useProduct";
+
+import { Provider, useDispatch, useSelector } from "react-redux";
+
 import Spinner from "../components/Spinner";
+
+import CartButton from "../components/CartButton";
+
+import { FaCirclePlus, FaCircleMinus } from "react-icons/fa6";
+import {
+  addProduct,
+  decreaseQuantity,
+  increaseQuantity,
+} from "../slices/cartSlice";
 
 //  {
 //     _id: '1',
@@ -31,22 +43,7 @@ const ProductContainer = styled.div`
   color: #475569;
 `;
 
-const CartButton = styled.button`
-  display: inline-block;
-  width: 100%;
-  padding: 8px;
-  background-color: #0f172a;
-  color: #f8fafc;
-  border: none;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
 
-  &:disabled {
-    background-color: #94a3b8;
-    cursor: not-allowed;
-  }
-`;
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -54,6 +51,26 @@ const ProductPage = () => {
   const navigate = useNavigate();
 
   const { product, isLoading, error } = useProduct(id);
+
+  const productState = useSelector((store) => {
+    return store.cart.cart.find((product) => product.id === id);
+  });
+
+  const dispatch = useDispatch();
+
+  function handleAddToCart() {
+    if (!isLoading) {
+      dispatch(
+        addProduct({
+          id : product._id,
+          name: product.name,
+          image: product.image,
+          quantityInStock: product.countInStock,
+          price: product.price,
+        })
+      );
+    }
+  }
 
   if (isLoading) return <Spinner />;
 
@@ -96,15 +113,44 @@ const ProductPage = () => {
 
           <div className="flex justify-between p-2 border-b border-slate-300 border-solid">
             <span>Status:</span>
-            <span>
-              {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+            <span className={product.countInStock===0?("text-red-600 font-bold text-xl tracking-wider"):("text-green-600 font-bold text-xl tracking-wider")}>
+              {productState
+                ? "In Cart"
+                : product.countInStock > 0
+                ? "In Stock"
+                : "Out of Stock"}
             </span>
           </div>
 
           <div className="p-2">
-            <CartButton disabled={product.countInStock === 0}>
-              Add to Cart
-            </CartButton>
+            {!productState ? (
+              <CartButton
+                onClick={handleAddToCart}
+                disabled={product.countInStock === 0}
+              >
+                Add to Cart
+              </CartButton>
+            ) : (
+              <div className="flex items-center justify-between">
+                <button
+                  onClick={() => {
+                    dispatch(decreaseQuantity({id}));
+                  }}
+                >
+                  <FaCircleMinus size={24} />
+                </button>
+
+                <span>{productState.quantity}</span>
+
+                <button
+                  onClick={() => {
+                    dispatch(increaseQuantity({id}));
+                  }}
+                >
+                  <FaCirclePlus size={24}/>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </ProductContainer>
