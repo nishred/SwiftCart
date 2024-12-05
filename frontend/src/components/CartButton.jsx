@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-
-
 const CartButton = styled.button`
   display: inline-block;
   width: 100%;

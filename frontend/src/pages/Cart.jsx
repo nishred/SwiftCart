@@ -7,7 +7,11 @@ import { FaCirclePlus } from "react-icons/fa6";
 import React from "react";
 
 import { FaCircleMinus } from "react-icons/fa6";
-import { decreaseQuantity, increaseQuantity, removeProduct } from "../slices/cartSlice";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeProduct,
+} from "../slices/cartSlice";
 
 import CartButton from "../components/CartButton";
 
@@ -65,15 +69,14 @@ const Cart = () => {
                 <div>${product.price}</div>
 
                 <div>
-                <CartButton onClick={() => {
-
-                   dispatch(removeProduct({id : product.id}))
-
-                }}>
-                 Remove
-                </CartButton>
+                  <CartButton
+                    onClick={() => {
+                      dispatch(removeProduct({ id: product.id }));
+                    }}
+                  >
+                    Remove
+                  </CartButton>
                 </div>
-
               </Table.TableRow>
             );
           })}
@@ -84,7 +87,9 @@ const Cart = () => {
           <div></div>
           <div className="tracking-widest text-xl">Total Price</div>
           <div className=" tracking-widest text-xl">${totalPrice}</div>
-          <div></div>
+          <div>
+            <CartButton>Checkout</CartButton>
+          </div>
         </Table.Footer>
       </Table>
     </>

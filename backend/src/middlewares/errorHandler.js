@@ -6,11 +6,10 @@ export default function errorHanlder(err, req, res, next) {
       success: false,
       error: err.message,
     });
+
   } else
     res.status(500).json({
       success: false,
-      message: "Something went wrong",
+      message: err.message,
     });
 }
-
-

@@ -1,10 +1,17 @@
-import express from "express"
+import express from "express";
 
-import productRouter from "./product.routes.js"
+import productRouter from "./product.routes.js";
 
-const v1Router = express.Router()
+import authRouter from "./auth.routes.js";
 
+import userRouter from "./user.routes.js";
 
-v1Router.use("/products", productRouter)
+const v1Router = express.Router();
 
-export default v1Router
+v1Router.use("/products", productRouter);
+
+v1Router.use("/auth", authRouter);
+
+v1Router.use("/users", userRouter);
+
+export default v1Router;

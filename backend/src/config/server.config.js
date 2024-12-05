@@ -3,8 +3,13 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const PORT = process.env.PORT
+const PORT = process.env.PORT;
 
-export const NODE_ENV = process.env.NODE_ENV
+const NODE_ENV = process.env.NODE_ENV;
 
-export const MONGO_URI = process.env.MONGO_URI
+const MONGO_URI = process.env.MONGO_URI;
+const JWT_SECRET = process.env.JWT_SECRET;
+
+const JWT_EXPIRY = process.env.JWT_EXPIRY;
+
+export { PORT, NODE_ENV, MONGO_URI, JWT_SECRET, JWT_EXPIRY };

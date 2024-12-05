@@ -9,6 +9,8 @@ import connectToDB from "./config/db.config.js";
 import { PORT } from "./config/server.config.js";
 import errorHandler from "./middlewares/errorHandler.js";
 
+import cookieParser from "cookie-parser"
+
 import apiRouter from "./routes/index.js";
 
 const app = express();
@@ -18,6 +20,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser())
 
 app.use("/api", apiRouter);
 
