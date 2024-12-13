@@ -1,15 +1,20 @@
 import { useForm } from "react-hook-form";
-import { discriminatedUnion, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../slices/userSlice";
 
-import { FormError } from "./Register";
+import styled from "styled-components";
 import { useState } from "react";
 
+export const FormError = styled.div`
+  color: red;
+  font-size: 1rem;
+`;
+
 const formSchema = z.object({
+  name: z.string().nonempty("Please enter your full name"),
   email: z
     .string()
     .email("Please enter a valid email")
@@ -17,7 +22,7 @@ const formSchema = z.object({
   password: z.string().nonempty("Password can't be empty"),
 });
 
-const SignIn = () => {
+const Register = () => {
   const { register, handleSubmit, formState, reset } = useForm({
     resolver: zodResolver(formSchema),
   });
@@ -31,11 +36,7 @@ const SignIn = () => {
   const { errors } = formState;
 
   async function submit(formData) {
-
-
-     console.log(formData)
-
-    const response = await fetch("http://localhost:5000/api/v1/auth/login", {
+    const response = await fetch("http://localhost:5000/api/v1/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,9 +51,7 @@ const SignIn = () => {
       dispatch(addUser(json.data));
 
       navigate("/");
-    } else {
-      setError(json.error ? json.error : "Something went wrong");
-    }
+    } else setError(json.error ? json.error : "Something went wrong");
   }
 
   return (
@@ -60,9 +59,20 @@ const SignIn = () => {
       onSubmit={handleSubmit(submit)}
       className="flex flex-col gap-6 text-slate-700 max-w-[500px] mx-auto"
     >
-      <h1 className="text-4xl uppercase font-semibold">Sign in</h1>
+      <h1 className="text-4xl uppercase font-semibold">Register</h1>
 
       {error && <FormError>{error}</FormError>}
+
+      <div className="flex flex-col gap-2">
+        <label>Full Name</label>
+        <input
+          type="text"
+          {...register("name")}
+          className="px-4 py-2 focus:outline-none focus:ring-2 ring-slate-500 transition-all bg-slate-100"
+        />
+
+        {errors.name && <FormError>{errors.name.message}</FormError>}
+      </div>
 
       <div className="flex flex-col gap-2">
         <label>Email Address</label>
@@ -91,13 +101,13 @@ const SignIn = () => {
       </button>
 
       <span>
-        New Customer?{" "}
-        <Link to={"/register"} className="hover:underline text-slate-900">
-          Register
+        Already a Customer?{" "}
+        <Link to={"/signin"} className="hover:underline text-slate-900">
+          Sign in
         </Link>
       </span>
     </form>
   );
 };
 
-export default SignIn;
+export default Register;

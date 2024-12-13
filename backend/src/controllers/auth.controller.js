@@ -28,7 +28,13 @@ const register = asyncHandler(async (req, res, next) => {
     })
     .json({
       success: true,
-      token: token,
+      data: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        token: token,
+      },
     });
 });
 
@@ -39,12 +45,17 @@ const register = asyncHandler(async (req, res, next) => {
 const login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
+  console.log(req.body);
+
   const user = await userRepository.getByEmail(email);
+
+  console.log(user)
 
   if (!user)
     throw new ErrorResponse("Invalid credentials", StatusCodes.UNAUTHORIZED);
 
   const match = await user.comparePassword(password);
+
 
   if (!match)
     throw new ErrorResponse("Invalid credentials", StatusCodes.UNAUTHORIZED);
@@ -60,7 +71,13 @@ const login = asyncHandler(async (req, res, next) => {
     })
     .json({
       success: true,
-      token: token,
+      data: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        token: token,
+      },
     });
 });
 

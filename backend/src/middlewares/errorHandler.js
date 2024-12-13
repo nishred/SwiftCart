@@ -10,6 +10,6 @@ export default function errorHanlder(err, req, res, next) {
   } else
     res.status(500).json({
       success: false,
-      message: err.message,
+      error: err.message,
     });
 }
