@@ -1,6 +1,8 @@
 import { login, register } from "./auth.controller.js";
 import { getProduct, getProducts } from "./product.controller.js";
-import { getUserProfile } from "./user.controller.js";
+import { getUserProfile, updateUserProfile } from "./user.controller.js";
+
+import { createOrder } from "./order.controller.js";
 
 const ProductController = {
   getProducts,
@@ -14,6 +16,11 @@ const AuthController = {
 
 const UserController = {
   getUserProfile,
+  updateUserProfile,
 };
 
-export { ProductController, AuthController, UserController };
+const OrderController = {
+  createOrder,
+};
+
+export { ProductController, AuthController, UserController,OrderController };

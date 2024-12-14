@@ -12,4 +12,23 @@ const getUserProfile = asyncHandler(async (req, res, next) => {
   res.status(StatusCodes.OK).json({ success: true, data: { user } });
 });
 
-export { getUserProfile };
+const updateUserProfile = asyncHandler(async (req, res, next) => {
+  const { _id } = req.user;
+
+  const updatedUser = await userRepository.update(_id, req.body);
+
+  console.log("updated user", updatedUser);
+
+  res.status(StatusCodes.ACCEPTED).json({
+    success: true,
+    message: "User updated successfully",
+    data: {
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    },
+  });
+});
+
+export { getUserProfile, updateUserProfile };

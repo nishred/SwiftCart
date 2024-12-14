@@ -1,14 +1,13 @@
 import Container from "./Container";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
-
 import { NavLink } from "react-router-dom";
-
 import { useSelector, useDispatch } from "react-redux";
-
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
 import { removeUser } from "../slices/userSlice";
+
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const user = useSelector((store) => store.user);
@@ -51,7 +50,6 @@ const Header = () => {
               <h1 className="text-2xl tracking-widest font-bold">SwiftCart</h1>
             </NavLink>
           </li>
-
           <li>
             <NavLink
               to={"/cart"}
@@ -101,7 +99,8 @@ const Header = () => {
                   className="absolute top-full bg-slate-200 text-slate-600 border border-solid left-0 right-0 flex flex-col"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <button className="py-1 hover:bg-slate-800">Profile</button>
+    
+                  <Link to={"/profile"} className="py-1 hover:bg-slate-800 text-center text-md capitalize">Profile</Link>
                   <button
                     className="py-1 hover:bg-slate-800"
                     onClick={() => {

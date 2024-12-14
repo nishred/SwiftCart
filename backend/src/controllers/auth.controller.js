@@ -45,11 +45,9 @@ const register = asyncHandler(async (req, res, next) => {
 const login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
-  console.log(req.body);
 
   const user = await userRepository.getByEmail(email);
 
-  console.log(user)
 
   if (!user)
     throw new ErrorResponse("Invalid credentials", StatusCodes.UNAUTHORIZED);

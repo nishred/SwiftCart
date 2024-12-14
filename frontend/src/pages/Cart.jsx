@@ -14,11 +14,18 @@ import {
 } from "../slices/cartSlice";
 
 import CartButton from "../components/CartButton";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const cart = useSelector((store) => store.cart.cart);
 
+  const user = useSelector((store) => store.user);
+
+  const isAuthenticated = Object.keys(user).length > 0;
+
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   function handleIncrease(id) {
     dispatch(increaseQuantity({ id }));
@@ -28,11 +35,17 @@ const Cart = () => {
     dispatch(decreaseQuantity({ id }));
   }
 
+  console.log(cart);
+
   const totalPrice = React.useMemo(() => {
-    return cart.reduce((acc, ele) => {
-      return acc + ele.price;
-    }, 0);
+    if (cart) {
+      return cart.reduce((acc, ele) => {
+        return acc + ele.price;
+      }, 0);
+    }
   }, [cart]);
+
+  if (!cart) return <h1>Your Cart is Empty</h1>;
 
   return (
     <>
@@ -88,7 +101,22 @@ const Cart = () => {
           <div className="tracking-widest text-xl">Total Price</div>
           <div className=" tracking-widest text-xl">${totalPrice}</div>
           <div>
-            <CartButton>Checkout</CartButton>
+            <CartButton
+              onClick={() => {
+                
+                if(isAuthenticated)
+                  navigate("/checkout")
+                else
+                {
+
+                   navigate("/signin?redirect=checkout")
+
+                }
+
+              }}
+            >
+              Checkout
+            </CartButton>
           </div>
         </Table.Footer>
       </Table>

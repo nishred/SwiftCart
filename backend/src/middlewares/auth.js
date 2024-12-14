@@ -13,7 +13,7 @@ const userRepository = new UserRepository();
 const auth = asyncHandler(async (req, res, next) => {
   let token;
 
-  if (req.cookies) token = req.cookies.token;
+  if (req.cookies?.token) token = req.cookies.token;
   else if (req.headers.authorization?.startsWith("Bearer")) {
     token = req.headers.authorization.split(" ")[1];
   }
@@ -33,4 +33,3 @@ const auth = asyncHandler(async (req, res, next) => {
 });
 
 export default auth;
-

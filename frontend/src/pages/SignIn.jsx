@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { discriminatedUnion, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../slices/userSlice";
 
@@ -22,6 +22,8 @@ const SignIn = () => {
     resolver: zodResolver(formSchema),
   });
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [error, setError] = useState("");
 
   const dispatch = useDispatch();
@@ -31,10 +33,6 @@ const SignIn = () => {
   const { errors } = formState;
 
   async function submit(formData) {
-
-
-     console.log(formData)
-
     const response = await fetch("http://localhost:5000/api/v1/auth/login", {
       method: "POST",
       headers: {
@@ -49,7 +47,9 @@ const SignIn = () => {
     if (json.success) {
       dispatch(addUser(json.data));
 
-      navigate("/");
+      const redirect = searchParams.get("redirect");
+
+      navigate(redirect ? `/${redirect}` : "/");
     } else {
       setError(json.error ? json.error : "Something went wrong");
     }

@@ -4,15 +4,25 @@ function loadFromLocalStorage() {
   let cart = localStorage.getItem("cart");
 
   if (cart) {
-    cart = JSON.parse(cart);
+    cart = JSON.parse(cart).cart;
   }
 
-  return cart;
+  return { cart: cart || [], shipping: {} };
 }
+
+const initialCartState = {
+  cart: [],
+  shipping: {
+    address: "",
+    city: "",
+    postalCode: "",
+    country: "",
+  },
+};
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState: loadFromLocalStorage() || { cart: [] },
+  initialState: initialCartState,
   reducers: {
     addProduct(state, action) {
       state.cart.push({
@@ -53,10 +63,20 @@ const cartSlice = createSlice({
         return product.id !== action.payload.id;
       });
     },
+    addShipping(state, action) {
+      Object.keys(action.payload).forEach((key) => {
+        state.shipping[key] = action.payload[key];
+      });
+    },
   },
 });
 
-export const { addProduct, removeProduct, increaseQuantity, decreaseQuantity } =
-  cartSlice.actions;
+export const {
+  addProduct,
+  removeProduct,
+  increaseQuantity,
+  decreaseQuantity,
+  addShipping,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

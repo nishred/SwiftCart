@@ -2,11 +2,12 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../slices/userSlice";
 
 import styled from "styled-components";
 import { useState } from "react";
+import { createUser } from "../api/user";
 
 export const FormError = styled.div`
   color: red;
@@ -36,22 +37,14 @@ const Register = () => {
   const { errors } = formState;
 
   async function submit(formData) {
-    const response = await fetch("http://localhost:5000/api/v1/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
 
-      body: JSON.stringify(formData),
-    });
+    const response = await createUser(formData);
 
-    const json = await response.json();
-
-    if (json.success) {
-      dispatch(addUser(json.data));
+    if (response.success) {
+      dispatch(addUser(response.data));
 
       navigate("/");
-    } else setError(json.error ? json.error : "Something went wrong");
+    } else setError(response.error ? response.error : "Something went wrong");
   }
 
   return (
