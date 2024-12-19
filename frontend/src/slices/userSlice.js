@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { initialOptions } from "../utils/constants";
 
 function getUserFromLocalStorage() {
   if (window.localStorage.getItem("user"))
@@ -6,20 +7,28 @@ function getUserFromLocalStorage() {
   return null;
 }
 
+const initialUserState = {
+  name: "",
+  email: "",
+  _id: "",
+  isAdmin: "",
+  token: "",
+  isAuthenticated: false,
+};
+
 const userSlice = createSlice({
   name: "user",
-  initialState: getUserFromLocalStorage() || {},
+  initialState: getUserFromLocalStorage() || initialUserState,
   reducers: {
     addUser(state, action) {
-      const { name, email, _id, isAdmin, token } = action.payload;
-      state.name = name;
-      state.email = email;
-      (state._id = _id), (state.isAdmim = isAdmin), (state.token = token);
+      Object.keys(action.payload).forEach((key) => {
+        state[key] = action.payload[key];
+      });
     },
 
     removeUser(state, action) {
-      Object.keys(state).forEach((key) => {
-        delete state[key];
+      Object.keys(initialUserState).forEach((key) => {
+        state[key] = initialUserState[key];
       });
     },
   },

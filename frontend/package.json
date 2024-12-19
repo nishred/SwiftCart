@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
+    "@paypal/react-paypal-js": "^8.7.0",
     "@radix-ui/themes": "^3.1.6",
     "@redux-devtools/extension": "^3.3.0",
     "@reduxjs/toolkit": "^2.4.0",

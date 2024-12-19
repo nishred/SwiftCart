@@ -45,7 +45,9 @@ const SignIn = () => {
     const json = await response.json();
 
     if (json.success) {
-      dispatch(addUser(json.data));
+      const nextUser = { ...json.data, isAuthenticated: true };
+
+      dispatch(addUser(nextUser));
 
       const redirect = searchParams.get("redirect");
 

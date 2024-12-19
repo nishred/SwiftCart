@@ -3,8 +3,8 @@ class CrudRepository {
     this.model = model;
   }
 
-  async getById(id) {
-    return await this.model.findById(id);
+  async getById(id,selectObj) {
+    return await this.model.findById(id).populate(selectObj);
   }
 
   async getAll() {

@@ -35,7 +35,6 @@ const Cart = () => {
     dispatch(decreaseQuantity({ id }));
   }
 
-  console.log(cart);
 
   const totalPrice = React.useMemo(() => {
     if (cart) {

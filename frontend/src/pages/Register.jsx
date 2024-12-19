@@ -37,11 +37,17 @@ const Register = () => {
   const { errors } = formState;
 
   async function submit(formData) {
-
     const response = await createUser(formData);
 
+    console.log(response.data);
+
     if (response.success) {
-      dispatch(addUser(response.data));
+      dispatch(
+        addUser({
+          ...response.data,
+          isAuthenticated: true,
+        })
+      );
 
       navigate("/");
     } else setError(response.error ? response.error : "Something went wrong");

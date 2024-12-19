@@ -8,9 +8,9 @@ import { useCreateOrder } from "../hooks/useCreateOrder";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-const tax = 200.99;
+import { tax } from "../utils/constants";
 
-const OrderSummary = styled.ul`
+export const OrderSummary = styled.ul`
   border-top: 1px solid black;
   border-bottom: 1px solid black;
 
@@ -24,13 +24,13 @@ const OrderSummary = styled.ul`
   }
 `;
 
-const OrderItem = styled.li`
+export const OrderItem = styled.li`
   display: grid;
   grid-template-columns: auto 1fr 1fr;
   column-gap: 1rem;
 `;
 
-const OrderList = styled.ul`
+export const OrderList = styled.ul`
   & li {
     border-bottom: 2px solid #cbd5e1;
     padding: 16px 0px;
@@ -43,7 +43,7 @@ const OrderList = styled.ul`
   grid-column: 1/4;
 `;
 
-const PlaceOrderLayout = styled.div`
+export const PlaceOrderLayout = styled.div`
   display: grid;
   grid-template-columns: repeat(1fr, 5);
   column-gap: 2rem;
@@ -72,8 +72,6 @@ const PlaceOrder = () => {
 
   useEffect(() => {
     if (data) {
-  
-      console.log(data)
 
       navigate(`/order/${data.data.order._id}`);
     }
@@ -101,8 +99,6 @@ const PlaceOrder = () => {
       taxPrice: tax,
       totalPrice: Number((totalPrice + tax).toFixed(2)),
     };
-
-    console.log(newOrder)
 
     mutate(newOrder);
   }

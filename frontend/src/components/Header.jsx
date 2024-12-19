@@ -18,7 +18,7 @@ const Header = () => {
 
   const ref = useRef();
 
-  const userExists = Object.keys(user).length > 0;
+  const userExists = user.isAuthenticated;
 
   useEffect(() => {
     if (showDropdown) {
@@ -99,8 +99,12 @@ const Header = () => {
                   className="absolute top-full bg-slate-200 text-slate-600 border border-solid left-0 right-0 flex flex-col"
                   onClick={(e) => e.stopPropagation()}
                 >
-    
-                  <Link to={"/profile"} className="py-1 hover:bg-slate-800 text-center text-md capitalize">Profile</Link>
+                  <Link
+                    to={"/profile"}
+                    className="py-1 hover:bg-slate-800 text-center text-md capitalize"
+                  >
+                    Profile
+                  </Link>
                   <button
                     className="py-1 hover:bg-slate-800"
                     onClick={() => {

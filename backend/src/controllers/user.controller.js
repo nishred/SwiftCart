@@ -17,8 +17,6 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
 
   const updatedUser = await userRepository.update(_id, req.body);
 
-  console.log("updated user", updatedUser);
-
   res.status(StatusCodes.ACCEPTED).json({
     success: true,
     message: "User updated successfully",
