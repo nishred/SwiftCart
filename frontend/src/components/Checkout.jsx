@@ -18,9 +18,7 @@ export default function Checkout() {
 
   useEffect(() => {
     if (transaction) {
-
       const { id, payer, update_time, status } = transaction;
-
 
       const { email_address } = payer;
 
@@ -68,3 +66,82 @@ export default function Checkout() {
     </div>
   );
 }
+
+// paypal payment integration demo
+
+// import React from "react";
+// import { PayPalButtons } from "@paypal/react-paypal-js";
+
+// const PayPalCheckout = () => {
+//   // Render the PayPal Buttons
+//   return (
+//     <div>
+//       <h1>Checkout with PayPal</h1>
+//       <PayPalButtons
+//         // Create the PayPal order when the button is clicked
+//         createOrder={async (data, actions) => {
+//           /**
+//            * Intuition:
+//            * 1. `createOrder` is triggered when the PayPal button is clicked.
+//            * 2. Using `actions.order.create`, we tell PayPal how much we want to charge and any other order details.
+//            */
+//           try {
+//             const orderID = await actions.order.create({
+//               purchase_units: [
+//                 {
+//                   amount: {
+//                     value: "10.00", // The total amount for this transaction
+//                   },
+//                 },
+//               ],
+//             });
+//             /**
+//              * Intuition:
+//              * 1. `actions.order.create` returns a promise that resolves with the `orderID`.
+//              * 2. The `orderID` uniquely identifies this transaction.
+//              */
+//             return orderID;
+//           } catch (error) {
+//             console.error("Error creating order:", error);
+//             throw error;
+//           }
+//         }}
+
+//         // Handle order approval after the customer completes the payment
+//         onApprove={async (data, actions) => {
+//           /**
+//            * Intuition:
+//            * 1. `onApprove` is triggered when the buyer approves the payment in PayPal.
+//            * 2. We use `actions.order.capture` to finalize the transaction.
+//            */
+//           try {
+//             const details = await actions.order.capture();
+//             /**
+//              * Intuition:
+//              * 1. `actions.order.capture` captures the payment and returns the transaction details.
+//              * 2. This is where we can log or display the successful transaction details.
+//              */
+//             alert(`Transaction completed by ${details.payer.name.given_name}`);
+//             console.log("Transaction details:", details);
+//           } catch (error) {
+//             console.error("Error capturing order:", error);
+//             throw error;
+//           }
+//         }}
+
+//         // Handle errors during the process
+//         onError={(err) => {
+//           /**
+//            * Intuition:
+//            * 1. If something goes wrong (e.g., network error or user cancellation), this function is called.
+//            * 2. Use this to log errors or show user-friendly messages.
+//            */
+//           console.error("PayPal Buttons Error:", err);
+//           alert("Something went wrong with the payment. Please try again.");
+//         }}
+//       />
+//     </div>
+//   );
+// };
+
+// export default PayPalCheckout;
