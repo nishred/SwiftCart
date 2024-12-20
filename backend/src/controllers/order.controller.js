@@ -34,9 +34,7 @@ const getOrder = asyncHandler(async (req, res, next) => {
 });
 
 const updateOrderToPaid = asyncHandler(async (req, res, next) => {
-
   const orderId = req.params.id;
-
 
   const updatedOrder = await orderRepository.updateOrderToPaid(
     orderId,
@@ -52,4 +50,15 @@ const updateOrderToPaid = asyncHandler(async (req, res, next) => {
   });
 });
 
-export { createOrder, getOrder, updateOrderToPaid };
+const getOrdersByUser = asyncHandler(async (req, res, next) => {
+  const id = req.user._id;
+
+  const orders = await orderRepository.getOrdersByUser(id);
+
+  res.status(StatusCodes.OK).json({
+    success: true,
+    data: { orders },
+  });
+});
+
+export { createOrder, getOrder, updateOrderToPaid, getOrdersByUser };

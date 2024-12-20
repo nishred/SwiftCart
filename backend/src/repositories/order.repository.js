@@ -8,7 +8,6 @@ class OrderRepository extends CrudRepository {
   }
 
   async updateOrderToPaid(orderId, paymentResult) {
-    
     const updatedOrder = await this.model.findByIdAndUpdate(
       orderId,
       {
@@ -29,6 +28,14 @@ class OrderRepository extends CrudRepository {
     );
 
     return updatedOrder;
+  }
+
+  async getOrdersByUser(id) {
+    const orders = await this.model.find({
+      user: id,
+    });
+
+    return orders
   }
 }
 

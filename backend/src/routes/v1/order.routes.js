@@ -4,7 +4,7 @@ import validator from "../../middlewares/validator.js";
 import { OrderController } from "../../controllers/index.js";
 import auth from "../../middlewares/auth.js";
 
-const orderRouter = express.Router();
+const orderRouter = express.Router({ mergeParams: true });
 
 orderRouter.post(
   "/",
@@ -12,6 +12,8 @@ orderRouter.post(
   validator(createOrderExtendedSchema),
   OrderController.createOrder
 );
+
+orderRouter.get("/", auth,OrderController.getOrdersByUser);
 
 orderRouter.get("/:id", auth, OrderController.getOrder);
 

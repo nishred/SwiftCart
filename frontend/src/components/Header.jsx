@@ -96,15 +96,23 @@ const Header = () => {
               {showDropdown && (
                 <div
                   ref={ref}
-                  className="absolute top-full bg-slate-200 text-slate-600 border border-solid left-0 right-0 flex flex-col"
+                  className="absolute top-full bg-slate-200 text-slate-600 border border-solid left-0 right-0 flex flex-col z-50"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Link
                     to={"/profile"}
-                    className="py-1 hover:bg-slate-800 text-center text-md capitalize"
+                    className="py-1 hover:bg-slate-800 text-center text-sm capitalize"
                   >
                     Profile
                   </Link>
+
+                  <Link
+                    to={"/orders"}
+                    className="py-1 hover:bg-slate-800 text-center text-sm capitalize"
+                  >
+                    Orders
+                  </Link>
+
                   <button
                     className="py-1 hover:bg-slate-800"
                     onClick={() => {

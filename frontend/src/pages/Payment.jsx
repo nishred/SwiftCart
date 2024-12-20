@@ -6,14 +6,13 @@ import { set } from "zod";
 import { useNavigate } from "react-router-dom";
 
 const Payment = () => {
-  const { steps, setSteps, paymentMethod, setPaymentMethod } = React.useContext(
+  const { steps, setSteps, order, setOrder } = React.useContext(
     CheckoutLayoutContext
   );
 
-  const id = useId()
+  const id = useId();
 
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     setSteps(2);
@@ -21,15 +20,19 @@ const Payment = () => {
 
   return (
     <div className="flex flex-col gap-3 max-w-[600px] mx-auto">
-      <h1 className="uppercase text-4xl text-slate-700 font-semibold">Payment Method</h1>
+      <h1 className="uppercase text-4xl text-slate-700 font-semibold">
+        Payment Method
+      </h1>
       <h2 className="uppercase text-3xl text-slate-500">Select Method</h2>
       <div>
         <input
           type="radio"
           value={"paypal"}
-          checked={paymentMethod === "paypal"}
+          checked={order.paymentMethod === "paypal"}
           onChange={(e) => {
-            setPaymentMethod("paypal");
+            setOrder((prev) => {
+              return { ...prev, paymentMethod: "paypal" };
+            });
           }}
           name="payment"
           id={`${id}-${"paypal"}`}
@@ -41,9 +44,11 @@ const Payment = () => {
         <input
           type="radio"
           value={"stripe"}
-          checked={paymentMethod === "stripe"}
+          checked={order.paymentMethod === "stripe"}
           onChange={(e) => {
-            setPaymentMethod("stripe");
+            setOrder((prev) => {
+              return { ...prev, paymentMethod: "stripe" };
+            });
           }}
           name="payment"
           id={`${id}-${"stripe"}`}
@@ -51,12 +56,12 @@ const Payment = () => {
         <label htmlFor={`${id}-${"stripe"}`}>Stripe</label>
       </div>
       <div>
-        <button onClick={() => {
-
-            navigate("/checkout/placeorder")
-
-
-        }} className="px-4 py-2 bg-slate-700 text-slate-200">
+        <button
+          onClick={() => {
+            navigate("/checkout/placeorder");
+          }}
+          className="px-4 py-2 bg-slate-700 text-slate-200"
+        >
           Continue
         </button>
       </div>

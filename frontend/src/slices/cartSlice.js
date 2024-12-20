@@ -18,6 +18,7 @@ const initialCartState = {
     postalCode: "",
     country: "",
   },
+  totalPrice: 0,
 };
 
 const cartSlice = createSlice({
@@ -68,6 +69,10 @@ const cartSlice = createSlice({
         state.shipping[key] = action.payload[key];
       });
     },
+
+    addTotalPrice(state, action) {
+      state.totalPrice = action.payload.totalPrice;
+    },
   },
 });
 
@@ -77,6 +82,7 @@ export const {
   increaseQuantity,
   decreaseQuantity,
   addShipping,
+  addTotalPrice,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

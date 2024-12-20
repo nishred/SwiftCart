@@ -30,6 +30,7 @@ import { initialOptions } from "./utils/constants";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 import { removeUser, addUser } from "./slices/userSlice";
+import Orders from "./pages/Orders";
 
 const queryClient = new QueryClient();
 
@@ -95,7 +96,9 @@ const App = () => {
                   </Protected>
                 }
               />
+
               <Route path="pay/:id" element={<Checkout />} />
+              <Route path="orders" element={<Orders />} />
             </Route>
           </Routes>
         </BrowserRouter>

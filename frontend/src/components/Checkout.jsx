@@ -1,5 +1,5 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -15,6 +15,8 @@ export default function Checkout() {
   const token = useSelector((store) => store.user.token);
 
   const { mutate, isLoading, isError, data } = usePayOrder(orderId);
+
+  const totalPrice = useSelector((store) => store.cart.totalPrice);
 
   useEffect(() => {
     if (transaction) {
@@ -47,7 +49,7 @@ export default function Checkout() {
             purchase_units: [
               {
                 amount: {
-                  value: "10.00", // Amount in USD
+                  value: totalPrice, // Amount in USD
                 },
               },
             ],

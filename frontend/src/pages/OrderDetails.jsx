@@ -17,6 +17,8 @@ import {
 const OrderDetails = () => {
   const { id } = useParams();
 
+  console.log(id);
+
   const token = useSelector((store) => store.user.token);
 
   const { data, isLoading, error } = useQuery({

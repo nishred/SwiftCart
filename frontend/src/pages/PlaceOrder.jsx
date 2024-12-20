@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { CheckoutLayoutContext } from "./CheckoutLayout";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
 
@@ -9,6 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 import { tax } from "../utils/constants";
+import { addTotalPrice } from "../slices/cartSlice";
 
 export const OrderSummary = styled.ul`
   border-top: 1px solid black;
@@ -50,7 +51,7 @@ export const PlaceOrderLayout = styled.div`
 `;
 
 const PlaceOrder = () => {
-  const { steps, setSteps, paymentMethod } = React.useContext(
+  const { steps, setSteps, order, setOrder } = React.useContext(
     CheckoutLayoutContext
   );
 
@@ -59,6 +60,8 @@ const PlaceOrder = () => {
   const { mutate, isSuccess, data } = useCreateOrder();
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const totalPrice = React.useMemo(() => {
     return cart.reduce((acc, ele) => {
@@ -72,12 +75,15 @@ const PlaceOrder = () => {
 
   useEffect(() => {
     if (data) {
-
       navigate(`/order/${data.data.order._id}`);
     }
   }, [data]);
 
   function handlePlaceOrder() {
+    const amountToBePaid = Number((totalPrice + tax).toFixed(2));
+
+    dispatch(addTotalPrice({ totalPrice: amountToBePaid }));
+
     const newOrder = {
       orderItems: cart.map((item) => {
         return {
@@ -93,13 +99,14 @@ const PlaceOrder = () => {
         ...shipping,
       },
 
-      paymentMethod,
+      paymentMethod: order.paymentMethod,
       itemsPrice: totalPrice,
       shippingPrice: 0,
       taxPrice: tax,
-      totalPrice: Number((totalPrice + tax).toFixed(2)),
+      totalPrice: amountToBePaid,
     };
 
+    setOrder(newOrder);
     mutate(newOrder);
   }
 
@@ -115,7 +122,7 @@ const PlaceOrder = () => {
         <li className="flex flex-col gap-2">
           <h1 className="text-3xl uppercase tracking-wider">Payment Method</h1>
 
-          <h2 className="text-xl">Method : {paymentMethod}</h2>
+          <h2 className="text-xl">Method : {order.paymentMethod}</h2>
         </li>
 
         <li>

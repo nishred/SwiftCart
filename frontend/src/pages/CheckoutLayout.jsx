@@ -22,11 +22,11 @@ const CheckoutLayout = () => {
 
   const [steps, setSteps] = useState(urlStep);
 
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [order, setOrder] = useState({ paymentMethod: "paypal" });
 
   return (
     <CheckoutLayoutContext.Provider
-      value={{ steps, setSteps, paymentMethod, setPaymentMethod }}
+      value={{ steps, setSteps, order, setOrder }}
     >
       <StyledCheckoutLayout>
         {stages.map((stage, idx) => {

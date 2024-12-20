@@ -35,7 +35,6 @@ async function fetchOrder(id, token) {
 }
 
 async function payOrder(id, token, paymentDetails) {
-
   const response = await fetch(
     `http://localhost:5000/api/v1/orders/${id}/pay`,
     {
@@ -56,4 +55,17 @@ async function payOrder(id, token, paymentDetails) {
   return json;
 }
 
-export { createOrder, fetchOrder, payOrder };
+async function getOrdersByUser(token) {
+  const response = await fetch("http://localhost:5000/api/v1/users/orders", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const json = await response.json();
+
+  return json.data.orders;
+}
+
+export { createOrder, fetchOrder, payOrder, getOrdersByUser };
