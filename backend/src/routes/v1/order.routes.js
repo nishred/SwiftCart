@@ -13,10 +13,10 @@ orderRouter.post(
   OrderController.createOrder
 );
 
-orderRouter.get("/", auth,OrderController.getOrdersByUser);
+orderRouter.get("/", auth(),OrderController.getOrdersByUser);
 
-orderRouter.get("/:id", auth, OrderController.getOrder);
+orderRouter.get("/:id", auth(), OrderController.getOrder);
 
-orderRouter.put("/:id/pay", auth, OrderController.updateOrderToPaid);
+orderRouter.put("/:id/pay", auth(), OrderController.updateOrderToPaid);
 
 export default orderRouter;

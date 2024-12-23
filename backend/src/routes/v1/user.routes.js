@@ -9,7 +9,14 @@ const userRouter = express.Router();
 
 userRouter.use("/orders", orderRouter);
 
-userRouter.get("/profile", auth, UserController.getUserProfile);
-userRouter.put("/:id", auth, UserController.updateUserProfile);
+userRouter.get("/profile", auth(), UserController.getUserProfile);
+
+userRouter.put("/:id", auth(), UserController.updateUserProfile);
+
+userRouter.get("/", auth(true), UserController.getAllUsers);
+
+userRouter.delete("/:id", auth(true), UserController.removeUser);
+
+userRouter.get("/:id", auth(true), UserController.getUserById);
 
 export default userRouter;

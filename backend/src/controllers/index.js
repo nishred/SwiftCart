@@ -1,6 +1,12 @@
 import { login, register } from "./auth.controller.js";
 import { getProduct, getProducts } from "./product.controller.js";
-import { getUserProfile, updateUserProfile } from "./user.controller.js";
+import {
+  getAllUsers,
+  getUserById,
+  getUserProfile,
+  removeUser,
+  updateUserProfile,
+} from "./user.controller.js";
 
 import {
   createOrder,
@@ -22,6 +28,9 @@ const AuthController = {
 const UserController = {
   getUserProfile,
   updateUserProfile,
+  getAllUsers,
+  removeUser,
+  getUserById,
 };
 
 const OrderController = {

@@ -1,3 +1,4 @@
+import ErrorResponse from "../errors/ErrorResponse.js";
 import UserRepository from "../repositories/user.repository.js";
 
 import asyncHandler from "../utils/asyncHandler.js";
@@ -13,9 +14,12 @@ const getUserProfile = asyncHandler(async (req, res, next) => {
 });
 
 const updateUserProfile = asyncHandler(async (req, res, next) => {
-  const { _id } = req.user;
+  const { id } = req.params
 
-  const updatedUser = await userRepository.update(_id, req.body);
+  const updatedUser = await userRepository.update(id, req.body);
+
+  if (!updatedUser)
+    throw new ErrorResponse("User not found", StatusCodes.NOT_FOUND);
 
   res.status(StatusCodes.ACCEPTED).json({
     success: true,
@@ -29,4 +33,48 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
   });
 });
 
-export { getUserProfile, updateUserProfile };
+const getAllUsers = asyncHandler(async (req, res, next) => {
+  const users = await userRepository.getAll();
+
+  res.status(StatusCodes.ACCEPTED).json({
+    success: true,
+    message: "Users retrieved successfully",
+    data: { users },
+  });
+});
+
+const removeUser = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+
+  const user = await userRepository.delete(id);
+
+  if (!user)
+    throw new ErrorResponse("The user doesn't exist", StatusCodes.NOT_FOUND);
+
+  res.status(StatusCodes.OK).json({
+    success: true,
+    message: "User deleted successfully",
+  });
+});
+
+const getUserById = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+
+  const user = await userRepository.getById(id);
+
+  if (!user) throw new ErrorResponse("User not found", StatusCodes.NOT_FOUND);
+
+  res.status(StatusCodes.OK).json({
+    success: true,
+    message: "User retrieved successfully",
+    data: { user },
+  });
+});
+
+export {
+  getUserProfile,
+  updateUserProfile,
+  getAllUsers,
+  removeUser,
+  getUserById,
+};

@@ -3,7 +3,7 @@ class CrudRepository {
     this.model = model;
   }
 
-  async getById(id,selectObj) {
+  async getById(id, selectObj) {
     return await this.model.findById(id).populate(selectObj);
   }
 
@@ -23,7 +23,7 @@ class CrudRepository {
   }
 
   async delete(id) {
-    await this.model.findByIdAndDelete(id);
+    return await this.model.findByIdAndDelete(id);
   }
 }
 

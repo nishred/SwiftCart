@@ -31,6 +31,8 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 import { removeUser, addUser } from "./slices/userSlice";
 import Orders from "./pages/Orders";
+import UserList from "./pages/UserList";
+import EditUser from "./pages/EditUser";
 
 const queryClient = new QueryClient();
 
@@ -99,6 +101,22 @@ const App = () => {
 
               <Route path="pay/:id" element={<Checkout />} />
               <Route path="orders" element={<Orders />} />
+              <Route
+                path="userlist"
+                element={
+                  <Protected isAdmin={true}>
+                    <UserList />
+                  </Protected>
+                }
+              />
+              <Route
+                path="edituser/:id"
+                element={
+                  <Protected isAdmin={true}>
+                    <EditUser />
+                  </Protected>
+                }
+              />
             </Route>
           </Routes>
         </BrowserRouter>
