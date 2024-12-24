@@ -14,6 +14,8 @@ import Spinner from "../components/Spinner";
 
 import CartButton from "../components/CartButton";
 
+import { IMAGE_URL } from "../utils/constants";
+
 import { FaCirclePlus, FaCircleMinus } from "react-icons/fa6";
 import {
   addProduct,
@@ -43,8 +45,6 @@ const ProductContainer = styled.div`
   color: #475569;
 `;
 
-
-
 const ProductPage = () => {
   const { id } = useParams();
 
@@ -62,7 +62,7 @@ const ProductPage = () => {
     if (!isLoading) {
       dispatch(
         addProduct({
-          id : product._id,
+          id: product._id,
           name: product.name,
           image: product.image,
           quantityInStock: product.countInStock,
@@ -88,7 +88,10 @@ const ProductPage = () => {
       </button>
 
       <ProductContainer>
-        <img src={product.image} className="col-start-1 col-end-3" />
+        <img
+          src={`${IMAGE_URL}${product.image}`}
+          className="col-start-1 col-end-3"
+        />
 
         <div className="flex flex-col gap-4 col-start-3 col-end-4">
           <h1 className="text-3xl font-bold uppercase tracking-wide">
@@ -113,7 +116,13 @@ const ProductPage = () => {
 
           <div className="flex justify-between p-2 border-b border-slate-300 border-solid">
             <span>Status:</span>
-            <span className={product.countInStock===0?("text-red-600 font-bold text-xl tracking-wider"):("text-green-600 font-bold text-xl tracking-wider")}>
+            <span
+              className={
+                product.countInStock === 0
+                  ? "text-red-600 font-bold text-xl tracking-wider"
+                  : "text-green-600 font-bold text-xl tracking-wider"
+              }
+            >
               {productState
                 ? "In Cart"
                 : product.countInStock > 0
@@ -134,7 +143,7 @@ const ProductPage = () => {
               <div className="flex items-center justify-between">
                 <button
                   onClick={() => {
-                    dispatch(decreaseQuantity({id}));
+                    dispatch(decreaseQuantity({ id }));
                   }}
                 >
                   <FaCircleMinus size={24} />
@@ -144,10 +153,10 @@ const ProductPage = () => {
 
                 <button
                   onClick={() => {
-                    dispatch(increaseQuantity({id}));
+                    dispatch(increaseQuantity({ id }));
                   }}
                 >
-                  <FaCirclePlus size={24}/>
+                  <FaCirclePlus size={24} />
                 </button>
               </div>
             )}

@@ -1,5 +1,11 @@
 import { login, register } from "./auth.controller.js";
-import { getProduct, getProducts } from "./product.controller.js";
+import {
+  deleteProduct,
+  getProduct,
+  getProducts,
+  createProduct,
+  updateProduct,
+} from "./product.controller.js";
 import {
   getAllUsers,
   getUserById,
@@ -18,6 +24,9 @@ import {
 const ProductController = {
   getProducts,
   getProduct,
+  deleteProduct,
+  createProduct,
+  updateProduct,
 };
 
 const AuthController = {

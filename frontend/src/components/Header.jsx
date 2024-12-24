@@ -134,7 +134,7 @@ const Header = () => {
 
                   <Dropdown.DropdownLink>Orders</Dropdown.DropdownLink>
 
-                  <Dropdown.DropdownLink>Products</Dropdown.DropdownLink>
+                  <Dropdown.DropdownLink to={"/productlist"}>Products</Dropdown.DropdownLink>
                 </Dropdown>
               )}
             </li>

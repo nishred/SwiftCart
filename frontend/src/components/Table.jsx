@@ -25,7 +25,11 @@ const StyledHeader = styled(StyledRow)`
   border: 2px solid #475569;
 `;
 
-const StyledTableRow = styled(StyledRow)``;
+const StyledTableRow = styled(StyledRow)`
+  &:nth-child(2n + 1) {
+    background-color: #e5e7eb;
+  }
+`;
 
 const StyledFooter = styled(StyledRow)`
   border-left: 2px solid #475569;

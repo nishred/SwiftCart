@@ -39,8 +39,6 @@ const Register = () => {
   async function submit(formData) {
     const response = await createUser(formData);
 
-    console.log(response.data);
-
     if (response.success) {
       dispatch(
         addUser({

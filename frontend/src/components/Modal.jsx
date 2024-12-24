@@ -87,8 +87,6 @@ const ModalWindow = ({ children, header, onAccept }) => {
 const Modal = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
 
-  console.log(showModal);
-
   return (
     <ModalContext.Provider value={{ showModal, setShowModal }}>
       {children}

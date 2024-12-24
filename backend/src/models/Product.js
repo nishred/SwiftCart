@@ -16,7 +16,6 @@ const reviewSchema = mongoose.Schema(
   }
 );
 
-
 const productSchema = mongoose.Schema(
   {
     user: {
@@ -70,6 +69,12 @@ const productSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+productSchema.pre("save", function (next) {
+  this.price = Number(this.price);
+
+  next();
+});
 
 const Product = mongoose.model("Product", productSchema);
 

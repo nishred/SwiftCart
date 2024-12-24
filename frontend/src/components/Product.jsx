@@ -15,12 +15,16 @@ import { Link } from "react-router-dom";
 import Rating from "./Rating";
 import StyledLink from "./StyledLink";
 
+import { IMAGE_URL } from "../utils/constants";
+
+
 const Product = ({ product }) => {
+
   return (
     <div className="p-4 w-56 border border-solid border-slate-200 flex flex-col gap-2">
-      <img className="w-full" src={product.image} />
+      <img className="w-full" src={`${IMAGE_URL}${product.image}`} />
 
-      <StyledLink to = {`product/${product._id}`}>
+      <StyledLink to={`product/${product._id}`}>
         <h2 className="capitalize font-semibold">{product.name}</h2>
       </StyledLink>
 

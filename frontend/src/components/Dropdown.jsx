@@ -23,7 +23,6 @@ const DropdownButton = styled.button`
 `;
 
 const Dropdown = ({ children, setDropdown }) => {
-
   const ref = useRef();
 
   useEffect(() => {
@@ -38,14 +37,13 @@ const Dropdown = ({ children, setDropdown }) => {
     };
   }, []);
 
-  
   return (
     <div
       ref={ref}
       className="absolute top-full bg-slate-200 text-slate-600 border border-solid left-0 right-0 flex flex-col z-50"
       onClick={(e) => e.stopPropagation()}
     >
-    {children}
+      {children}
     </div>
   );
 };

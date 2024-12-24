@@ -6,3 +6,5 @@ export const initialOptions = {
   currency: "USD",
   intent: "capture",
 };
+
+export const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;

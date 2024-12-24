@@ -33,6 +33,10 @@ import { removeUser, addUser } from "./slices/userSlice";
 import Orders from "./pages/Orders";
 import UserList from "./pages/UserList";
 import EditUser from "./pages/EditUser";
+import ProductList from "./pages/ProductList";
+import CreateProduct from "./pages/CreateProduct";
+import UpdateProfile from "./components/UpdateProfile";
+import EditProduct from "./pages/EditProduct";
 
 const queryClient = new QueryClient();
 
@@ -114,6 +118,31 @@ const App = () => {
                 element={
                   <Protected isAdmin={true}>
                     <EditUser />
+                  </Protected>
+                }
+              />
+
+              <Route
+                path="productlist"
+                element={
+                  <Protected isAdmin={true}>
+                    <ProductList />
+                  </Protected>
+                }
+              />
+              <Route
+                path="createproduct"
+                element={
+                  <Protected isAdmin={true}>
+                    <CreateProduct />
+                  </Protected>
+                }
+              />
+              <Route
+                path="editproduct/:id"
+                element={
+                  <Protected isAdmin={true}>
+                    <EditProduct />
                   </Protected>
                 }
               />
